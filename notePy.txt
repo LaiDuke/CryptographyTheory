@@ -1,0 +1,18 @@
+To code python
+
+- 3 steps
+
+	+ step 1: install python
+		https://www.python.org/downloads/
+
+	+ step 2: install get-pip.py
+		https://pip.pypa.io/en/stable/installing/
+
+	+ step 3: install any module/pakage you want
+		https://pypi.org/
+
+
+
+
+https://www.tutorialspoint.com/cryptography_with_python/cryptography_with_python_quick_guide.htm
+	
