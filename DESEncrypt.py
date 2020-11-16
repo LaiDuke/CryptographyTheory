@@ -69,9 +69,9 @@ def dec2bin(num):
             res = '0' + res
     return res
 # Permute function to rearrange the bits
-def permute(bit_str, arr_rule, number_of_bit):
+def permute(bit_str, arr_rule):
     permutation = ""
-    for i in range(0, number_of_bit):
+    for i in range(0, len(arr_rule)):
         permutation = permutation + bit_str[arr_rule[i] - 1]
     return permutation
 # shifting the bits towards left by nth shifts
@@ -196,7 +196,7 @@ PC_2 = [14, 17, 11, 24, 1, 5,
 
 def process(plain_str, all_round_key):
 
-    plain_str = permute(hex2bin(plain_str), init_P, 64)
+    plain_str = permute(hex2bin(plain_str), init_P)
 
     left_str = plain_str[0:32]
     right_str = plain_str[32:64]
@@ -209,13 +209,13 @@ def process(plain_str, all_round_key):
 
         print("Round ", i + 1, " ", bin2hex(left_str), " ", bin2hex(right_str), " ", bin2hex(all_round_key[i]))
 
-    cipher_text = permute(right_str + left_str, final_P, 64)
+    cipher_text = permute(right_str + left_str, final_P)
 
     return cipher_text
 
 def F_funtion(right_str, key_str):
 
-    right_expanded = permute(right_str, exp_D, 48)
+    right_expanded = permute(right_str, exp_D)
 
     xor_rlt = xor(right_expanded, key_str)
 
@@ -230,20 +230,24 @@ def F_funtion(right_str, key_str):
                           xor_rlt[s_round + 4]))
         val_dec = s_boxes[j][row][col]
         result = result + dec2bin(val_dec)
-    result = permute(result, P, 32)
+    result = permute(result, P)
     return result
 
 def generate_key(key_str):
-    key_str = permute(hex2bin(key_str), PC_1, 56)
+    key_str = permute(hex2bin(key_str), PC_1)
     left_key = key_str[0:28]
     right_key = key_str[28:56]
     all_round_key = []
     for i in range(0, 16):
         left_key = shift_left(left_key, shift_table[i])
         right_key = shift_left(right_key, shift_table[i])
-        round_i_key = permute(left_key + right_key, PC_2, 48)
+        round_i_key = permute(left_key + right_key, PC_2)
         all_round_key.append(round_i_key)
     return all_round_key
+
+
+
+
 
 def DES_encrypt(plain_hex, key_hex):
     key_bin = generate_key(key_hex)
@@ -261,3 +265,4 @@ def DES_decrypt(cipher_hex, key_hex):
 plain_text = "123456ABCD132536"
 key = "AABB09182736CCDD"
 
+DES_decrypt(DES_encrypt(plain_text, key), key)
