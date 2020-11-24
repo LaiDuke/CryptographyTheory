@@ -530,7 +530,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         print('Usage: ./aes.py encrypt "key" "message"')
         print('Running tests...')
-        from tests import *
+        from ProjectPycharm.aes_tests import  *
         run()
     elif len(sys.argv) == 2 and sys.argv[1] == 'benchmark':
         benchmark()
